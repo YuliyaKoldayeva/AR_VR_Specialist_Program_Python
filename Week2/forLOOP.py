@@ -4,7 +4,7 @@ for t in range (11):
     print("{} : {}".format(t,asteriscs))
 
 
-print("Program run has ended")
+print("First program run has ended")
 
 # Second type
 for t in range (11):
@@ -15,5 +15,5 @@ for t in range (11):
     print("")
 
 
-print("Program run has ended")
+print("Second program run has ended")
 
