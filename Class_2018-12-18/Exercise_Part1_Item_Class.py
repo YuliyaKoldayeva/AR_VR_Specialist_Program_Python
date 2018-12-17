@@ -5,7 +5,9 @@ T/F values for taxable
 """
 import datetime
 
-class Item():
+
+class Item(object):
+
     def __init__(self, item_sku, item_name, item_price, taxable=True):
         self.__item_sku = item_sku
         self.__item_name = item_name
@@ -28,7 +30,7 @@ class Item():
         self.__item_price = new_item_price
 
     def GetItemPrice(self):
-        return self.__itemprice
+        return self.__item_price
 
     def SetItemTaxable(self, taxable=True):
         self.__taxable = taxable
@@ -40,20 +42,29 @@ class Item():
         return [self.__item_sku, self.__item_name, self.__item_price, self.__taxable]
 
 
-
-
-class Order():
-
-    def __init__(self, purchase_date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")):
+class Order(Item):
+    def __init__(self, purchase_date, item_quantity, item_sku, item_name, item_price, taxable=True):
+        super().__init__(item_sku, item_name, item_price, taxable=True)
         self.purchase_date = purchase_date
+        self.quantity = item_quantity
+        self.sku = item_sku
+        self.name = item_name
+        self.price = item_price
+        self.taxable = taxable
         self.item_dict = {}
-        self.item_info = ""
 
+    def OrderItemDescription(self):
+        return {self.purchase_date:[self.quantity, self.sku, self.name, self.price, self.taxable]}
 
-    def BuyItem(self, item_description):
-        self.item_dict[self.purchase_date] = item_description
+    def SetQuantity(self, new_quantity):
+        self.quantity = new_quantity
+        
+    def GetQuantity(self):
+        return self.quantity
+
+    def BuyItem(self):
+        self.item_dict[self.purchase_date] = Order.OrderItemDescription()
         return self.item_dict
-
 
 
 """
@@ -63,32 +74,17 @@ class Order():
     def GetCancelItem(self, purchase_date):
         self.__item_list
 
-
-    item1 = Item('apple', 7.8)
-    item2 = Item('pear', 5)
-
-    user1 = User('John')
-
-    user1.BuyItem(item1, 5)
-    print("user1 cart0 have: %s" % user1.GetCart(0).ShowCart())
-
-    user1.BuyItem(item2, 6)
-    print("user1 cart0 have: %s" % user1.GetCart(0).ShowCart())
-
-
-    user1.AddCart()
-    user1.BuyItem(item1, 5, 1)
-    print("user1 cart1 have: %s" % user1.GetCart(1).ShowCart())
-
 """
 
 item_test1 = Item(1323, "apple", 134, False).ItemDescription()
 item_test2 = Item(133, "Mac", 134, True).ItemDescription()
 print(item_test1, item_test2)
 
-order_test = Order()
+order_test = Order(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2, 1323, "apple", 134, False)
 
-order_test.BuyItem(item_test1)
-order_test.BuyItem(item_test2)
+print(order_test.OrderItemDescription())
+print(order_test.GetQuantity())
+#print(order_test.BuyItem(1323, 1, "apple", 134, False))
+#print(order_test.BuyItem(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 2, 1323, "apple", 134, False))
 
-print(order_test)
+#print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
