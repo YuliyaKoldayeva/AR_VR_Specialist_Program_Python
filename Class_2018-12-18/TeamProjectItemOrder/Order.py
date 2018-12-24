@@ -21,17 +21,17 @@ class Item:
 
     def print_item(self):
         """Printing the description of the item"""
-        self.__taxable_mark = "T" * self.__taxable + " " * (1 - self.__taxable)
-        self.item_description = ("| {} | {} {} | $ {:0,.2f}{} |  {}  |".format(self.__sku,
+        self.__taxable_field_fill = "T" * self.__taxable + " " * (1 - self.__taxable)
+        self.__price_field_fill = "." * (Item.__price_field_length - len(str(self.__price)))
+        self.__item_description = ("| {} | {} {} | $ {}{:0,.2f} |  {}  |".format(self.__sku,
                                                                                self.__name,
                                                                                ("." * (
                                                                                Item.__item_name_field_length - len(
                                                                                    self.__name))),
+                                                                               self.__price_field_fill,
                                                                                self.__price,
-                                                                               (" " * (Item.__price_field_length - len(
-                                                                                   str(self.__price)))),
-                                                                               self.__taxable_mark))
-        return self.item_description
+                                                                               self.__taxable_field_fill))
+        return self.__item_description
 
     def item_base_price(self):
         """Return gets the price and makes it available to user"""
@@ -71,6 +71,7 @@ class Order:
 
     def __init__(self):
         """This instantiate new order"""
+        print("\nThank you for shopping with us! \n")
         self.__items_list = []
         self.__order_number = Order.last_order_number_used + 1
         Order.last_order_number_used = self.__order_number
@@ -130,8 +131,8 @@ class Order:
         fill_space_name = int(Item.get_item_name_field_length(self)) - len("ITEM NAME")
         fill_space_price = int(Item.get_price_field_length(self)) - len("PRICE")
 
-        print(" " * 35, "YOUR ORDER NUMBER IS:", self.__order_number, "\n")
-        print("| SKU      | ITEM NAME {} | PRICE   {} | TAX |\n".format(" " * fill_space_name,
+        print("\n", " " * 40, "ORDER NUMBER : ", self.__order_number, "\n")
+        print("| SKU      | ITEM NAME {} | PRICE   {} | TAX |".format(" " * fill_space_name,
                                                                         " " * fill_space_price))
         print("=" * Order.__description_length)
 
@@ -143,15 +144,20 @@ class Order:
         print(Order.final_info_printing(self, "Subtotal", Order.get_price_subtotals(self)))
         print(Order.final_info_printing(self, "Tax GST", Order.get_gst_subtotals(self)))
         print(Order.final_info_printing(self, "Tax PST", Order.get_pst_subtotals(self)))
+        print(Order.final_info_printing(self, "TOTAL", Order.get_total_to_pay(self)))
         print("\nYour order contains the total of {} items".format(len(self.__items_list)))
         print("\nThank you for your order")
+
+
 
 user_answer = True
 users_new_order = Order()
 while user_answer == True:
-    answer_string = input("Do you want to add a new item to your order? (Y/N) >> ").upper()
+    answer_string = input("Do you want to add something to your order? (Y/N) >> ").upper()
     if answer_string == "Y":
         sku = int(input("Please, enter 8-digits of item's SKU. >> "))
+        while len(str(sku)) != 8:
+            sku = int(input("Please, check the item's SKU, it should contain 8-digits. >> "))
         name = input("Please, enter the item's name >> ").title()
         price = float(input("Please, enter the item's price >> "))
         is_taxable = input("Is this item taxable? (Y/N) >> ").upper()
@@ -163,15 +169,18 @@ while user_answer == True:
 
         new_item = Item(sku, name, price, taxable)
         users_new_order.add_item(new_item)
-        #user_answer = False
+
 
     else:
+
+        print("\nPlease, check your order before paying.\n")
         print(users_new_order.print_order_summary())
 
-
-
-
-
+        want_to_change_answer =input("Do you want to delete some item from your order (Y/N) >> ").upper()
+        if want_to_change_answer == "Y":
+            sku_to_delete =int(input("Please, enter the SKU of item you want to delete >> "))
+            users_new_order.remove_item(sku_to_delete)
+            print(users_new_order.print_order_summary())
 
 
 
