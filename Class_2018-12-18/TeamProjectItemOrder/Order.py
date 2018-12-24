@@ -4,7 +4,7 @@ class Item:
     __item_name_field_length = 25
     __price_field_length = 10
 
-    def __init__(self, sku, name, price, taxable):
+    def __init__(self, sku:int, name: str, price:float, taxable:bool):
         """Instantiating the items"""
         self.__sku = sku
         self.__name = name
@@ -21,6 +21,7 @@ class Item:
 
     def print_item(self):
         """Printing the description of the item"""
+        self.__taxable_mark = "T" * self.__taxable + " " * (1 - self.__taxable)
         self.item_description = ("| {} | {} {} | $ {:0,.2f}{} |  {}  |".format(self.__sku,
                                                                                self.__name,
                                                                                ("." * (
@@ -29,8 +30,7 @@ class Item:
                                                                                self.__price,
                                                                                (" " * (Item.__price_field_length - len(
                                                                                    str(self.__price)))),
-                                                                               ("T" * (self.__taxable) + " " * (
-                                                                               1 - self.__taxable))))
+                                                                               self.__taxable_mark))
         return self.item_description
 
     def item_base_price(self):
@@ -76,6 +76,7 @@ class Order:
         Order.last_order_number_used = self.__order_number
 
     def get_order_number(self):
+        """This gives the order number"""
         return self.__order_number
 
     def add_item(self, item: Item):
@@ -145,22 +146,50 @@ class Order:
         print("\nYour order contains the total of {} items".format(len(self.__items_list)))
         print("\nThank you for your order")
 
+user_answer = True
+users_new_order = Order()
+while user_answer == True:
+    answer_string = input("Do you want to add a new item to your order? (Y/N) >> ").upper()
+    if answer_string == "Y":
+        sku = int(input("Please, enter 8-digits of item's SKU. >> "))
+        name = input("Please, enter the item's name >> ").title()
+        price = float(input("Please, enter the item's price >> "))
+        is_taxable = input("Is this item taxable? (Y/N) >> ").upper()
+        if is_taxable == "Y":
+            taxable = True
 
-a1 = Item(12345678, "first item", 2000.00, True)  # instantiating the first item
-a2 = Item(23456789, "second item", 300.00, False)  # instantiating the second item
-a3 = Item(34567891, "third item", 10.00, True)  # instantiating the third item
-print("Item's SKU is", a1.get_item_sku())
+        else:
+            taxable = False
 
-print(a1.print_item())
-print(a2.print_item())
-print(a1.item_base_price())
-print(a1.item_gst_amount())
+        new_item = Item(sku, name, price, taxable)
+        users_new_order.add_item(new_item)
+        #user_answer = False
 
-new_order = Order()
+    else:
+        print(users_new_order.print_order_summary())
 
-new_order.add_item(a1)  # adding the first item
-new_order.add_item(a2)  # adding the second item
-new_order.add_item(a3)  # adding the third item)
-print(new_order.print_order_summary())
-new_order.remove_item(12345678)
-print(new_order.print_order_summary())
+
+
+
+
+
+
+
+# a1 = Item(12345678, "first item", 2000.00, True)  # instantiating the first item
+# a2 = Item(23456789, "second item", 300.00, False)  # instantiating the second item
+# a3 = Item(34567891, "third item", 10.00, True)  # instantiating the third item
+#
+#
+# print(a1.print_item())
+# print(a2.print_item())
+# print(a1.item_base_price())
+# print(a1.item_gst_amount())
+#
+# new_order = Order()
+#
+# new_order.add_item(a1)  # adding the first item
+# new_order.add_item(a2)  # adding the second item
+# new_order.add_item(a3)  # adding the third item)
+# print(new_order.print_order_summary())
+# new_order.remove_item(12345678)
+# print(new_order.print_order_summary())
