@@ -1,10 +1,12 @@
-# #from .Item import Item
+# from .Item import Item
+
+import datetime
 
 class Item:
     __item_name_field_length = 25
     __price_field_length = 10
 
-    def __init__(self, sku:int, name: str, price:float, taxable:bool):
+    def __init__(self, sku: int, name: str, price: float, taxable: bool):
         """Instantiating the items"""
         self.__sku = sku
         self.__name = name
@@ -20,17 +22,17 @@ class Item:
         return Item.__item_name_field_length
 
     def print_item(self):
-        """Printing the description of the item"""
+        """Returns the formatted description of the item"""
+        self.__name_field_fill = "." * (Item.__item_name_field_length - len(self.__name))
+        self.__price_field_fill = " " * (Item.__price_field_length - len(str(self.__price)))
         self.__taxable_field_fill = "T" * self.__taxable + " " * (1 - self.__taxable)
-        self.__price_field_fill = "." * (Item.__price_field_length - len(str(self.__price)))
+
         self.__item_description = ("| {} | {} {} | $ {}{:0,.2f} |  {}  |".format(self.__sku,
-                                                                               self.__name,
-                                                                               ("." * (
-                                                                               Item.__item_name_field_length - len(
-                                                                                   self.__name))),
-                                                                               self.__price_field_fill,
-                                                                               self.__price,
-                                                                               self.__taxable_field_fill))
+                                                                                 self.__name,
+                                                                                 self.__name_field_fill,
+                                                                                 self.__price_field_fill,
+                                                                                 self.__price,
+                                                                                 self.__taxable_field_fill))
         return self.__item_description
 
     def item_base_price(self):
@@ -38,7 +40,7 @@ class Item:
         return self.__price
 
     def item_gst_amount(self):
-        """Returns tax amount"""
+        """Returns GST tax amount"""
         if self.__taxable:
             self.__gst_amount = self.__price * .05
         else:
@@ -46,7 +48,7 @@ class Item:
         return self.__gst_amount
 
     def item_pst_amount(self):
-        """Returns tax amount"""
+        """Returns PST tax amount"""
         if self.__taxable:
             self.__pst_amount = self.__price * .09975
         else:
@@ -71,7 +73,7 @@ class Order:
 
     def __init__(self):
         """This instantiate new order"""
-        print("\nThank you for shopping with us! \n")
+        print("\nThank you for visiting our on-line store!")
         self.__items_list = []
         self.__order_number = Order.last_order_number_used + 1
         Order.last_order_number_used = self.__order_number
@@ -98,32 +100,36 @@ class Order:
         return False
 
     def get_price_subtotals(self):
+        """Returns price before tax amount for all  items"""
         self.__subtotal_price = 0
         for current_item in self.__items_list:
             self.__subtotal_price += current_item.item_base_price()
         return self.__subtotal_price
 
     def get_pst_subtotals(self):
+        """Returns PST tax amount for all items"""
         self.__subtotal_pst = 0
         for current_item in self.__items_list:
             self.__subtotal_pst += current_item.item_pst_amount()
         return self.__subtotal_pst
 
     def get_gst_subtotals(self):
+        """Returns GST tax amount for all items"""
         self.__subtotal_gst = 0
         for current_item in self.__items_list:
             self.__subtotal_gst += current_item.item_gst_amount()
         return self.__subtotal_gst
 
     def get_total_to_pay(self):
-
+        """Returns price with both taxes included for all  items"""
         self.__total_to_pay = Order.get_price_subtotals(self) + Order.get_pst_subtotals(self) + Order.get_gst_subtotals(
             self)
         return self.__total_to_pay
 
-    def final_info_printing(self, title_string, amount_to_display):
 
-        self.__string_to_print = f"{title_string} {'.' * (40 - len(title_string))} $ {amount_to_display:0,.2f}"
+    def final_info_printing(self, title_string, amount_to_display):
+        """Returns the string to be printed to inform """
+        self.__string_to_print = f"{title_string} {'.' * (40 - len(title_string))} $ {' ' * (11 - len('{:0,.2f}'.format(amount_to_display)))}{amount_to_display:0,.2f}"
         return self.__string_to_print
 
     def print_order_summary(self):
@@ -131,9 +137,10 @@ class Order:
         fill_space_name = int(Item.get_item_name_field_length(self)) - len("ITEM NAME")
         fill_space_price = int(Item.get_price_field_length(self)) - len("PRICE")
 
-        print("\n", " " * 40, "ORDER NUMBER : ", self.__order_number, "\n")
-        print("| SKU      | ITEM NAME {} | PRICE   {} | TAX |".format(" " * fill_space_name,
-                                                                        " " * fill_space_price))
+        print("\n"+" " * 40, "ORDER NUMBER: ", self.__order_number)
+        print("Purchase date: ", datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        print("\n| SKU      | ITEM NAME {} | PRICE   {} | TAX |".format(" " * fill_space_name,
+                                                                      " " * fill_space_price))
         print("=" * Order.__description_length)
 
         for current_item in self.__items_list:
@@ -144,44 +151,74 @@ class Order:
         print(Order.final_info_printing(self, "Subtotal", Order.get_price_subtotals(self)))
         print(Order.final_info_printing(self, "Tax GST", Order.get_gst_subtotals(self)))
         print(Order.final_info_printing(self, "Tax PST", Order.get_pst_subtotals(self)))
+        print("")
         print(Order.final_info_printing(self, "TOTAL", Order.get_total_to_pay(self)))
         print("\nYour order contains the total of {} items".format(len(self.__items_list)))
-        print("\nThank you for your order")
+
+        return print("\nThank you for your order")
 
 
-
-user_answer = True
+answer_string = ""
 users_new_order = Order()
-while user_answer == True:
-    answer_string = input("Do you want to add something to your order? (Y/N) >> ").upper()
-    if answer_string == "Y":
-        sku = int(input("Please, enter 8-digits of item's SKU. >> "))
-        while len(str(sku)) != 8:
-            sku = int(input("Please, check the item's SKU, it should contain 8-digits. >> "))
-        name = input("Please, enter the item's name >> ").title()
-        price = float(input("Please, enter the item's price >> "))
-        is_taxable = input("Is this item taxable? (Y/N) >> ").upper()
-        if is_taxable == "Y":
-            taxable = True
+while answer_string != "FIN":
+    answer_string = input("\nWhat do you want to do next?"+
+                          "\n\tTo add a new item to your order type 'ADD'"+
+                          "\n\tTo delete any item from your order type: 'DEL')"+
+                          "\n\tTo complete your order type: 'FIN'"+
+                          "\n\n\t\tPlease, type the action of your choice HERE: >> ").upper()
 
-        else:
-            taxable = False
+    if answer_string == "ADD":
+        print("\nPlease, give the following information: \n")
+
+        while True:
+            try:
+                sku = int(input("Please, enter 8-digits of item's SKU. >> "))
+                while len(str(sku)) != 8:
+                    sku = int(input("Please, check the item's SKU, it should contain 8-digits. >> "))
+                break
+            except ValueError:
+                print("This field accepts only digits from 0 to 9 ")
+
+        name = input("Please, enter the item's name >> ").title()
+
+        while True:
+            try:
+                price = float(input("Please, enter the item's price >> "))
+                break
+            except ValueError:
+                print("This field accepts only digits from 0 to 9 and decimal point.")
+
+        is_taxable = input("Is this item taxable? (Y/N) >> ").upper()
+
+        while True:
+            if is_taxable == "Y":
+                taxable = True
+                break
+            elif is_taxable == "N":
+                taxable = False
+                break
+
+            else:
+                print("Your answer is not valid, please, try again.")
+                is_taxable = input("Is this item taxable? (Y/N) >> ").upper()
+
 
         new_item = Item(sku, name, price, taxable)
         users_new_order.add_item(new_item)
 
-
-    else:
-
-        print("\nPlease, check your order before paying.\n")
+    elif answer_string == "DEL":
+        print("Here is the description of your order:")
+        print(users_new_order.print_order_summary())
+        sku_to_delete = int(input("Please, enter the SKU of item you want to delete >> "))
+        users_new_order.remove_item(sku_to_delete)
         print(users_new_order.print_order_summary())
 
-        want_to_change_answer =input("Do you want to delete some item from your order (Y/N) >> ").upper()
-        if want_to_change_answer == "Y":
-            sku_to_delete =int(input("Please, enter the SKU of item you want to delete >> "))
-            users_new_order.remove_item(sku_to_delete)
-            print(users_new_order.print_order_summary())
+    elif answer_string == "FIN":
+        print("\nPlease, check the description of your order below.\n")
+        print(users_new_order.print_order_summary())
 
+    else:
+        print("It seams that you've chosen nonexistent option. Please, try again.")
 
 
 # a1 = Item(12345678, "first item", 2000.00, True)  # instantiating the first item
