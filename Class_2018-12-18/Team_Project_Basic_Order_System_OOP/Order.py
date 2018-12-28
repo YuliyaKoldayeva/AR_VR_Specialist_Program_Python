@@ -3,19 +3,19 @@ import datetime
 
 class Order:
     __description_length = 63
-    last_order_number_used = 0
+    __last_order_number_used = 0
 
     @staticmethod
     def get_last_order_number_used():
         """Static method to refer order number"""
-        return Order.last_order_number_used
+        return Order.__last_order_number_used
 
     def __init__(self):
         """This instantiate a new order"""
         print("\nThank you for visiting our on-line store!")
         self.__items_list = []
-        self.__order_number = Order.last_order_number_used + 1
-        Order.last_order_number_used = self.__order_number
+        self.__order_number = Order.__last_order_number_used + 1
+        Order.__last_order_number_used = self.__order_number
 
     def get_order_number(self):
         """This gives the order number"""
