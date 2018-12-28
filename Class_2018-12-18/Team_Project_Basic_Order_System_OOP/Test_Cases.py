@@ -30,3 +30,11 @@ print("\nOrder 1 summary printed: ", new_order1.print_order_summary())
 new_order2.remove_item(12345678) # removing the first item from the second order
 print("\nOrder 2 summary printed: ", new_order2.print_order_summary())
 print("\nOrder 3 summary printed: ", new_order3.print_order_summary())
+
+for order in range(100):
+    new_order = Order()
+
+new_order.add_item(a1)  # adding the first item to the new order
+new_order.add_item(a2)  # adding the second item to the new order
+new_order.add_item(a3)  # adding the third item to the new order
+print("\nOrder summary printed: ", new_order.print_order_summary())
