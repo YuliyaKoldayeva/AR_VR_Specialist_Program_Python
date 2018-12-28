@@ -14,6 +14,7 @@ class Order:
         """This instantiate a new order"""
         print("\nStarting a new order.\nThank you for visiting our on-line store!")
         self.__items_list = []
+        self.__purchase_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.__order_number = Order.__last_order_number_used + 1
         Order.__last_order_number_used = self.__order_number
 
@@ -72,14 +73,14 @@ class Order:
     def print_order_summary(self):
         """Generate order summary"""
         print("\nHere is your order summary:")
-        fill_space_name = " " * (int(Item.get_item_name_field_length(self)) - len("ITEM NAME"))
-        fill_space_price = " " * (int(Item.get_price_field_length(self)) - len("PRICE"))
-        fill_space_order_number = "0"* int(8 - len(str(self.__order_number)))
+        self.__fill_space_name = " " * (int(Item.get_item_name_field_length(self)) - len("ITEM NAME"))
+        self.__fill_space_price = " " * (int(Item.get_price_field_length(self)) - len("PRICE"))
+        self.__fill_space_order_number = "0"* int(8 - len(str(self.__order_number)))
 
-        print("\nPurchase date: ", datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        print("\n{} ORDER NUMBER: {}{}".format((" " * 40), fill_space_order_number, self.__order_number))
-        print("\n| SKU      | ITEM NAME {} | PRICE   {} | TAX |".format(fill_space_name,
-                                                                      fill_space_price))
+        print("\nPurchase date: ", self.__purchase_date)
+        print("\n{} ORDER NUMBER: {}{}".format((" " * 40), self.__fill_space_order_number, self.__order_number))
+        print("\n| SKU      | ITEM NAME {} | PRICE   {} | TAX |".format(self.__fill_space_name,
+                                                                        self.__fill_space_price))
         print("=" * Order.__description_length)
 
         for current_item in self.__items_list:
