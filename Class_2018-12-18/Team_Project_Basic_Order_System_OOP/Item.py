@@ -56,7 +56,7 @@ class Item:
 
     def get_item_total(self):
         """Returns the TOTAL amount to pay, Taxes included"""
-        self.__item_total = Item.item_base_price(self) + Item.item_pst_amount(self) + Item.item_pst_amount(self)
+        self.__item_total = Item.item_base_price(self) + Item.item_pst_amount(self) + Item.item_gst_amount(self)
         return self.__item_total
 
 # Test area
