@@ -6,7 +6,7 @@ users_new_order = Order()
 while answer_string != "FIN":
     answer_string = input("\nWhat do you want to do next?"+
                           "\n\tTo add a new item to your order type 'ADD'"+
-                          "\n\tTo delete any item from your order type: 'DEL')"+
+                          "\n\tTo delete any item from your order type: 'DEL'"+
                           "\n\tTo complete your order type: 'FIN'"+
                           "\n\n\t\tPlease, type your choice HERE: >> ").upper()
 
@@ -50,14 +50,14 @@ while answer_string != "FIN":
         users_new_order.add_item(new_item)
 
     elif answer_string == "DEL":
-        print("Here is the description of your order:")
+
         print(users_new_order.print_order_summary())
         sku_to_delete = int(input("Please, enter the SKU of item you want to delete >> "))
         users_new_order.remove_item(sku_to_delete)
         print(users_new_order.print_order_summary())
 
     elif answer_string == "FIN":
-        print("\nPlease, check the description of your order below.\n")
+
         print(users_new_order.print_order_summary())
 
     else:

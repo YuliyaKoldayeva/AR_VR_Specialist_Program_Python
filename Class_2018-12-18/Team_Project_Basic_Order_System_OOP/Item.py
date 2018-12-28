@@ -19,6 +19,9 @@ class Item:
         """Static method to refer the length of the item name field"""
         return Item.__item_name_field_length
 
+    def get_item_sku(self):
+        return self.__sku
+
 
     def print_item(self):
         """Returns the formatted description of the item"""
