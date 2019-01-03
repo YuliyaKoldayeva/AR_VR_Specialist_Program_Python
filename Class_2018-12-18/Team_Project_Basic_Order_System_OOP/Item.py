@@ -1,6 +1,10 @@
 class Item:
+    __sku = 00000000
+    __name = ""
+    __price = 0
+    __taxable = False
     __item_name_field_length = 25
-    __price_field_length = 10
+    __price_field_length = 11
 
     def __init__(self, sku: int, name: str, price: float, taxable: bool):
         """Instantiating the items"""
@@ -20,28 +24,19 @@ class Item:
         return Item.__item_name_field_length
 
     def get_item_sku(self):
+        """This function returns a SKU."""
         return self.__sku
 
 
-    def print_item(self):
-        """Returns the formatted description of the item"""
-        self.__name_field_fill = "." * (Item.__item_name_field_length - len(self.__name))
-        self.__price_field_fill = "." * (Item.__price_field_length - len(str(self.__price)))
-        self.__taxable_field_fill = "T" * self.__taxable + " " * (1 - self.__taxable)
+    def is_taxable():
+        """This function returns a Boolean value of True or False depending if the taxable attribute is True or False."""
+        return self.__taxable
 
-        self.__item_description = ("| {} | {} {} | $ {}{:0,.2f} |  {}  |".format(self.__sku,
-                                                                                 self.__name,
-                                                                                 self.__name_field_fill,
-                                                                                 self.__price_field_fill,
-                                                                                 self.__price,
-                                                                                 self.__taxable_field_fill))
-        return self.__item_description
-
-    def item_base_price(self):
-        """Return gets the price and makes it available to user"""
+    def get_item_base_price(self):
+        """Returns the price and makes it available to user"""
         return self.__price
 
-    def item_gst_amount(self):
+    def calculate_gst(self):
         """Returns GST tax amount"""
         if self.__taxable:
             self.__gst_amount = self.__price * .05
@@ -49,7 +44,7 @@ class Item:
             self.__gst_amount = 0
         return self.__gst_amount
 
-    def item_pst_amount(self):
+    def calculate_qst(self):
         """Returns PST tax amount"""
         if self.__taxable:
             self.__pst_amount = self.__price * .09975
@@ -59,8 +54,24 @@ class Item:
 
     def get_item_total(self):
         """Returns the TOTAL amount to pay, Taxes included"""
-        self.__item_total = Item.item_base_price(self) + Item.item_pst_amount(self) + Item.item_gst_amount(self)
+        self.__item_total = Item.get_item_base_price(self) + Item.calculate_qst(self) + Item.calculate_gst(self)
         return self.__item_total
+
+
+
+    def print_item(self):
+        """Returns the formatted description of the item"""
+        self.__name_field_fill = "." * (Item.__item_name_field_length - len(self.__name))
+        self.__price_field_fill = "." * (Item.__price_field_length - len('{:0,.2f}'.format(self.__price)))
+        self.__taxable_field_fill = "T" * self.__taxable + " " * (1 - self.__taxable)
+
+        self.__item_description = ("| {} | {} {} | $ {}{:0,.2f} |  {}  |".format(self.__sku,
+                                                                                 self.__name,
+                                                                                 self.__name_field_fill,
+                                                                                 self.__price_field_fill,
+                                                                                 self.__price,
+                                                                                 self.__taxable_field_fill))
+        return self.__item_description
 
 # Test area
 
