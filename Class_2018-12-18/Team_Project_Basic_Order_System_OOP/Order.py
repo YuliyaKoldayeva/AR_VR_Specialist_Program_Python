@@ -41,33 +41,37 @@ class Order:
         """Returns price before tax amount for all  items"""
         self.__subtotal_price = 0
         for current_item in self.__items_list:
-            self.__subtotal_price += current_item.item_base_price()
+            self.__subtotal_price += current_item.get_item_base_price()
         return self.__subtotal_price
 
-    def get_pst_subtotals(self):
+    def get_qst_subtotals(self):
         """Returns PST tax amount for all items"""
-        self.__subtotal_pst = 0
+        self.__subtotal_qst = 0
         for current_item in self.__items_list:
-            self.__subtotal_pst += current_item.item_pst_amount()
-        return self.__subtotal_pst
+            self.__subtotal_qst += current_item.calculate_qst()
+        return self.__subtotal_qst
 
     def get_gst_subtotals(self):
         """Returns GST tax amount for all items"""
         self.__subtotal_gst = 0
         for current_item in self.__items_list:
-            self.__subtotal_gst += current_item.item_gst_amount()
+            self.__subtotal_gst += current_item.calculate_gst()
         return self.__subtotal_gst
 
     def get_total_to_pay(self):
         """Returns price with both taxes included for all  items"""
-        self.__total_to_pay = Order.get_price_subtotals(self) + Order.get_pst_subtotals(self) + Order.get_gst_subtotals(
-            self)
+        self.__total_to_pay = Order.get_price_subtotals(self) + \
+                              Order.get_qst_subtotals(self) + \
+                              Order.get_gst_subtotals(self)
         return self.__total_to_pay
 
 
     def final_info_printing(self, title_string, amount_to_display):
         """Returns the string to be printed to inform """
-        self.__string_to_print = f"{title_string} {'.' * (40 - len(title_string))} $ {'.' * (11 - len('{:0,.2f}'.format(amount_to_display)))}{amount_to_display:0,.2f}"
+        self.__string_to_print = f"{title_string} " \
+                                 f"{'.' * (40 - len(title_string))} " \
+                                 f"$ {'.' * (11 - len('{:0,.2f}'.format(amount_to_display)))}" \
+                                 f"{amount_to_display:0,.2f}"
         return self.__string_to_print
 
     def print_order_summary(self):
@@ -79,7 +83,7 @@ class Order:
 
         print("\nPurchase date: ", self.__purchase_date)
         print("\n{} ORDER NUMBER: {}{}".format((" " * 40), self.__fill_space_order_number, self.__order_number))
-        print("\n| SKU      | ITEM NAME {} | PRICE   {} | TAX |".format(self.__fill_space_name,
+        print("\n| SKU      | ITEM NAME {} | PRICE  {} | TAX |".format(self.__fill_space_name,
                                                                         self.__fill_space_price))
         print("=" * Order.__description_length)
 
@@ -89,7 +93,7 @@ class Order:
         print("="*Order.__description_length)
         print(Order.final_info_printing(self, "Subtotal", Order.get_price_subtotals(self)))
         print(Order.final_info_printing(self, "Tax GST", Order.get_gst_subtotals(self)))
-        print(Order.final_info_printing(self, "Tax PST", Order.get_pst_subtotals(self)))
+        print(Order.final_info_printing(self, "Tax PST", Order.get_qst_subtotals(self)))
         print("")
         print(Order.final_info_printing(self, "TOTAL", Order.get_total_to_pay(self)))
 
