@@ -45,7 +45,7 @@ class Order:
         return self.__subtotal_price
 
     def get_qst_subtotals(self):
-        """Returns PST tax amount for all items"""
+        """Returns QST tax amount for all items"""
         self.__subtotal_qst = 0
         for current_item in self.__items_list:
             self.__subtotal_qst += current_item.calculate_qst()
