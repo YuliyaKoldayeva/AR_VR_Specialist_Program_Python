@@ -14,7 +14,7 @@ class BankAccount:
     def withdraw(self, withdraw_amount):
         self.__balance -= withdraw_amount
 
-    def __g
+    # def __g
 
 
 b = BankAccount(10)
