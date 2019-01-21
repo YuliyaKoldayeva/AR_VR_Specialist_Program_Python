@@ -18,7 +18,7 @@ print("Change 'Order Date' format from string to datetime format: ")
 original_dataframe['Order Date Formatted'] = pd.to_datetime(original_dataframe['Order Date'], errors='coerce', yearfirst=True,format='%m/%d/%Y')
 print(original_dataframe['Order Date Formatted'].head())
 
-print("\n\tCheck if the formatting was successful\n")
+print("\n\tCheck if the formatting was successful\n\n")
 print(original_dataframe['Order Date Formatted'].dtypes)
 
 print(original_dataframe['Order Date Formatted'])
