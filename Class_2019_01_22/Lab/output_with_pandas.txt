@@ -1,0 +1,55 @@
+    Number of records from Europe:  22
+
+	The total of units sold:  512871
+
+	The list of item types without duplicates:
+
+['Baby Food', 'Cereal', 'Office Supplies', 'Fruits', 'Household', 'Vegetables', 'Personal Care', 'Clothes', 'Cosmetics', 'Beverages', 'Meat', 'Snacks']
+
+
+SOME OF OTHER USEFUL FUNCTIONS IN PANDAS
+
+	Check the dimensions of the data set (ROWS, COLUMNS):  (100, 14)
+
+	Print column names and data types (object is general, non numeric data type)
+
+Region             object
+Country            object
+Item Type          object
+Sales Channel      object
+Order Priority     object
+Order Date         object
+Order ID            int64
+Ship Date          object
+Units Sold          int64
+Unit Price        float64
+Unit Cost         float64
+Total Revenue     float64
+Total Cost        float64
+Total Profit      float64
+dtype: object
+
+	Statistics on any column of interest containing numeric data
+
+count     100.000000
+mean     5128.710000
+std      2794.484562
+min       124.000000
+25%      2836.250000
+50%      5382.500000
+75%      7369.000000
+max      9925.000000
+Name: Units Sold, dtype: float64
+
+	Print the value frequencies of all records in Region column
+
+Sub-Saharan Africa                   36
+Europe                               22
+Asia                                 11
+Australia and Oceania                11
+Middle East and North Africa         10
+Central America and the Caribbean     7
+North America                         3
+Name: Region, dtype: int64
+
+Process finished with exit code 0
