@@ -3,13 +3,23 @@ from datetime import datetime
 class Document:
 
     def __init__(self, input_authors: str, input_day: int, input_month: int, input_year:int):
-        """Instantiate Document object
-        type two digits for day and month , i.g.: Mars => 03, day 5 => 05
-        type four digits for year, i.g.: 1987 """
+        """Instantiate a new Document object"""
+        self.__authors = input_authors.title()
 
-        self.__authors = input_authors
-        date_string = '{}/{}/{}'.format(input_year, input_month, input_day) # create data string with the inputs from user
-        self.__doc_date = (datetime.strptime(date_string, '%Y/%m/%d')).date() # transform date_string into date format
+        try:
+            # create data string with the inputs from user
+            date_string = '{}/{}/{}'.format(input_year, input_month, input_day)
+            # transform date_string into date format
+            self.__doc_date = (datetime.strptime(date_string, '%Y/%m/%d')).date()
+
+        except:   # catches abnormal values
+            print("\n\nERROR MESSAGE FOR THE WRONG DATE INPUT:"
+                  "\n\nThe format for the date should be:"
+                  "\n\tdigits from 1 to 31 for the day "
+                  "\n\tdigits from 1 to 12 for the month"
+                  "\n\tfour digits for year."
+                  "\n\nPlease, try again.\n")
+
 
     def get_authors(self):
         """Return Authors"""
@@ -28,3 +38,6 @@ class Document:
 # my_doc = Document("Some Author", 5, 3, 1956)
 # print("Date is:", my_doc.get_date())
 # print("Author is:", my_doc.get_authors())
+# my_doc2 = Document("Another Author", 30, 13, 1956)
+# my_doc3 = Document("Another Author", 35, 10, 1756)
+# my_doc4 = Document("Another Author", 3, 1, 56)
