@@ -5,7 +5,7 @@ class PyCalc():
 
     def __init__(self, my_list):
         """Instantiate a new object"""
-        self.__my_list=my_list
+        self.__my_list = my_list
 
     def get_average(self):
         """Calculate the average of the list manually."""
@@ -37,7 +37,7 @@ class PyCalc():
 
 print("\n\tPRINTING HARD CODDED EXAMPLE\n")
 my_list = [110, 15, 20, 55]
-print("Here is a list of numbers: {}".format( my_list))
+print("Here is my list of numbers: {}".format( my_list))
 
 c = PyCalc(my_list)
 print("\nThe average value of this list of numbers is is:", c.get_average())
