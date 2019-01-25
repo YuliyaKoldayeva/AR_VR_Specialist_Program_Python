@@ -20,6 +20,10 @@ class Document:
                   "\n\tfour digits for year."
                   "\n\nPlease, try again.\n")
 
+    def set_author(self, new_author_name: str):
+        """Set Author"""
+        self.__authors = new_author_name.title()
+        return self.__authors
 
     def get_authors(self):
         """Return Authors"""
@@ -29,15 +33,25 @@ class Document:
         """Return Date"""
         return self.__doc_date
 
-    def add_author(self, author_name: str):
-        """Set Author"""
-        self.__authors = author_name
+    def add_author(self, new_author_name: str):
+        """Add Author"""
+        if self.__authors != "":
+            self.__authors = self.__authors + ", " + new_author_name.title()
+        else:
+            self.__authors = new_author_name.title()
 
 
-# TESTING AREA
-# my_doc = Document("Some Author", 5, 3, 1956)
-# print("Date is:", my_doc.get_date())
-# print("Author is:", my_doc.get_authors())
+#TESTING AREA
+my_doc = Document("Some Author", 5, 3, 1956)
+my_doc.set_author("Corrected Name")
+print("\nDate is:", my_doc.get_date())
+print("\nAuthor field:", my_doc.get_authors())
+my_doc5 = Document("", 5, 3, 1956)
+my_doc5.add_author("New Author")
+print("\nAuthor field:", my_doc5.get_authors())
+my_doc6 = Document("First Author", 5, 3, 1956)
+my_doc6.add_author("addiTional AuTHor")
+print("\nAuthor field:", my_doc6.get_authors())
 # my_doc2 = Document("Another Author", 30, 13, 1956)
 # my_doc3 = Document("Another Author", 35, 10, 1756)
 # my_doc4 = Document("Another Author", 3, 1, 56)
