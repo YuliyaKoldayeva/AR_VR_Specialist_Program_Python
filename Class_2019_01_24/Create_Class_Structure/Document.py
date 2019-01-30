@@ -36,14 +36,14 @@ class Document:
 
 #TESTING AREA
 
-authors_list = ["Some Author"]
-my_doc = Document(authors_list, 5, 3, 1956)
-print(my_doc.get_authors())
-print("\nDate is:", my_doc.get_date())
-print("\nAuthor field:", my_doc.get_authors())
-my_doc5 = Document(["The Only Author"], 5, 3, 1956)
-my_doc5.add_author("New Author")
-print("\nAuthor field:", my_doc5.get_authors())
-my_doc6 = Document(["First Author"], 5, 3, 1956)
-my_doc6.add_author("addiTional AuTHor")
-print("\nAuthor field:", my_doc6.get_authors())
+# authors_list = ["Some Author"]
+# my_doc = Document(authors_list, 5, 3, 1956)
+# print(my_doc.get_authors())
+# print("\nDate is:", my_doc.get_date())
+# print("\nAuthor field:", my_doc.get_authors())
+# my_doc5 = Document(["The Only Author"], 5, 3, 1956)
+# my_doc5.add_author("New Author")
+# print("\nAuthor field:", my_doc5.get_authors())
+# my_doc6 = Document(["First Author"], 5, 3, 1956)
+# my_doc6.add_author("Additional Author")
+# print("\nAuthor field:", my_doc6.get_authors())
