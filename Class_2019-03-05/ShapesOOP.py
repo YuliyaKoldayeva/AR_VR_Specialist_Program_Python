@@ -74,11 +74,27 @@ class ShapeCollection:
     def add_square(self, square: Square):
         self.__shape_collection.append(square)
 
+    def add_rectangle(self, rectangle: Rectangle):
+        self.__shape_collection.append(rectangle)
 
     def get_collection_list(self):
         return self.__shape_collection
 
+    def get_total_area(self):
+        total_area = 0
+        for shape in self.__shape_collection:
+            total_area += shape.get_area()
+        return total_area
 
+    def get_total_perimeter(self):
+        total_perimeter = 0
+        for shape in self.__shape_collection:
+            total_perimeter += shape.get_perimeter()
+        return total_perimeter
+
+
+    def get_shape_count(self):
+        return len(self.__shape_collection)
 
 
 circle1 = Circle(10, "Blue")
@@ -103,11 +119,12 @@ print("Square perimeter is", round(square1.get_perimeter(), 2))
 
 
 collection1 = ShapeCollection()
-print("COLLECTION", collection1.get_collection_list())
+collection1.add_circle(Circle(15, "White"))
+collection1.add_square(Square(12, "Brown"))
+collection1.add_rectangle(Rectangle(13, 12, "Pink"))
 
-collection1.add_circle(square1)
-collection1.add_square(circle1)
 
-print("COLLECTION", collection1.get_collection_list())
+print("COLLECTION total area", round(collection1.get_total_area(),2))
+print("COLLECTION total perimeter", round(collection1.get_total_perimeter(),2))
+print("COLLECTION size", collection1.get_shape_count())
 
-print("Circle area through COLLECTION", collection1.circle1.get_area)
