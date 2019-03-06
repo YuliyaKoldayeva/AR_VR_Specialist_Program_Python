@@ -55,7 +55,7 @@ def go_through_the_list(input_list):
             print("This is a character. So far, the characters found are", sorted(character_set))
 
         elif is_special_character(test_string):
-            print("This is a special character.")
+            print("This is a special character")
 
         else:
             print("This is an element without clear classification")

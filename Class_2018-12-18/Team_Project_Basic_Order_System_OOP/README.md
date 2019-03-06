@@ -1,5 +1,5 @@
 # Basic Order System #
-This is a team project for the course "Programming for VR 1" of AEC AR&VR Specialist Program at Champlain College(Quebec).
+This is a team project for the course "Programming for VR 1" of AEC AR-VR Specialist Program at Champlain College(Quebec).
 Python Lab, Dec. 18, 2018
 
 Creating a Basic Order System using Object Oriented Programming Techniques
