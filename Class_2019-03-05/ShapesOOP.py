@@ -67,7 +67,6 @@ class ShapeCollection:
     def __init__(self):
         self.__shape_collection = []
 
-
     def add_circle(self, circle: Circle):
         self.__shape_collection.append(circle)
 
@@ -79,6 +78,10 @@ class ShapeCollection:
 
     def get_collection_list(self):
         return self.__shape_collection
+
+    def clear_collection_list(self):
+        self.__shape_collection = []
+
 
     def get_total_area(self):
         total_area = 0
@@ -127,4 +130,5 @@ collection1.add_rectangle(Rectangle(13, 12, "Pink"))
 print("COLLECTION total area", round(collection1.get_total_area(),2))
 print("COLLECTION total perimeter", round(collection1.get_total_perimeter(),2))
 print("COLLECTION size", collection1.get_shape_count())
+print("COLLECTION ", collection1.get_collection_list())
 
